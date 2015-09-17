@@ -67,16 +67,17 @@
             // lblOut
             // 
             this.lblOut.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblOut.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.lblOut.Location = new System.Drawing.Point(270, 12);
             this.lblOut.Name = "lblOut";
-            this.lblOut.Size = new System.Drawing.Size(261, 196);
+            this.lblOut.Size = new System.Drawing.Size(261, 432);
             this.lblOut.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 217);
+            this.ClientSize = new System.Drawing.Size(621, 476);
             this.Controls.Add(this.lblOut);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnCalc);

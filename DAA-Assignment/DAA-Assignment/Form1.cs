@@ -41,39 +41,34 @@ namespace DAA_Assignment
                     String[] items = LineList[i].Split(' ');
 
                     TestCase testCase = new TestCase();
-                    ProgramS program = new ProgramS();
                     testCase.memoryRegions = new List<int>();
                     testCase.Programs = new List<ProgramS>();
 
                     testCase.noOfPrograms = Int32.Parse(items[1]);
                     testCase.noOfMemoryRegions = Int32.Parse(items[0]);
 
-                    //Console.WriteLine("Memory = "+ testCase.noOfMemoryRegions + ", Progs = " + testCase.noOfPrograms);
                     String[] memoryRegionList = LineList[i + 1].Split(' ');
-                    //Console.WriteLine(testCase.noOfMemoryRegions + ", " + memoryRegionList.Length);
                     for (int j = 0; j < testCase.noOfMemoryRegions; j++)
                     {
-                        //Console.WriteLine("i=" + i + ", j=" + j+", memoryRegionList="+ memoryRegionList[j]);
                         testCase.memoryRegions.Add(Int32.Parse(memoryRegionList[j]));
                     }
-                    //Console.WriteLine("mR Count = "+testCase.memoryRegions.Count);
                     
                     for (int j = i + 2; j < i + 2 + testCase.noOfPrograms; j++)
                     {
-                        //Console.WriteLine("i=" + i + ", j=" + j);
+                        ProgramS program = new ProgramS();
+
                         String[] timeSpaceTradeOffList = LineList[j].Split(' ');
-                        //Console.WriteLine(LineList[j]);
                         program.timeSpaceTradeOffs = new List<TimeSpaceTradeOff>();
+                        TimeSpaceTradeOff tsto;
                         for (int k = 0; k <= Int32.Parse(timeSpaceTradeOffList[0]); k++)
                         {
-                            TimeSpaceTradeOff tsto = new TimeSpaceTradeOff();
+                            tsto = new TimeSpaceTradeOff();
                             tsto.Space = Int32.Parse(timeSpaceTradeOffList[k + 1]);
                             tsto.Time = Int32.Parse(timeSpaceTradeOffList[k + 2]);
-                            //Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
+                            Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
                             program.timeSpaceTradeOffs.Add(tsto);
                             k++;
                         }
-                        //Console.WriteLine("i=" + i + ", j=" + j + ", tSTOCount=" + program.timeSpaceTradeOffs.Count);
                         testCase.Programs.Add(program);
                     }
                     testCases.Add(testCase);
@@ -82,16 +77,18 @@ namespace DAA_Assignment
                 {
                     break;
                 }
-
-                //Console.WriteLine(LineList.Length);
             }
-            //Console.WriteLine(testCases[1].Programs.Count);
+            Console.WriteLine(testCases[0].Programs[0].timeSpaceTradeOffs[0].Space);
 
             //Printing
             lblOut.Text = "";
+
+            int avg_turnAround=0;
+
             for (int i = 0; i < testCases.Count; i++)
             {
-
+                List<TimeSpaceTradeOff> tmpTSTOList = new List<TimeSpaceTradeOff>();
+                
                 lblOut.Text += "Case "+(i+1)+"\n";
 
                 lblOut.Text += "Average turnaround time = "+"\n";
@@ -100,10 +97,21 @@ namespace DAA_Assignment
                 {
                     for (int k = 0; k < testCases[i].Programs[j].timeSpaceTradeOffs.Count; k++)
                     {
-                        lblOut.Text += "Program " + (j + 1) + " Space "+ testCases[i].Programs[j].timeSpaceTradeOffs[k].Space+  "\n";
+                        TimeSpaceTradeOff tmpTSTO = new TimeSpaceTradeOff();
+                        tmpTSTO.Space = testCases[i].Programs[j].timeSpaceTradeOffs[k].Space;
+                        tmpTSTO.Time = testCases[i].Programs[j].timeSpaceTradeOffs[k].Time;
+                        tmpTSTOList.Add(tmpTSTO);
                     }
                 }
-
+                List<TimeSpaceTradeOff> sortedList = tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
+                sortedList.RemoveAt(0);
+                for (int z=0; z< sortedList.Count; z++)
+                {
+                    Console.WriteLine(sortedList[z].Space);
+                   
+                }
+                //tmpTSTOList.Sort();
+                Console.WriteLine(tmpTSTOList.Count);
                 lblOut.Text += "\n";
             }
         }
