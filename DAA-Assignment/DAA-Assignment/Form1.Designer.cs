@@ -28,56 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.txtdata = new System.Windows.Forms.TextBox();
+            this.btnCalc = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.lblOut = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // txtdata
             // 
-            this.textBox1.Location = new System.Drawing.Point(8, 12);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(256, 197);
-            this.textBox1.TabIndex = 0;
+            this.txtdata.Location = new System.Drawing.Point(8, 12);
+            this.txtdata.Multiline = true;
+            this.txtdata.Name = "txtdata";
+            this.txtdata.Size = new System.Drawing.Size(256, 197);
+            this.txtdata.TabIndex = 0;
+            this.txtdata.Text = "2 4\r\n40 60\r\n1 35 4\r\n1 20 3\r\n1 40 10\r\n1 60 7\r\n3 5\r\n10 20 30\r\n2 10 50 12 30\r\n2 10 1" +
+    "00 20 25\r\n1 25 19\r\n1 19 41\r\n2 10 18 30 42\r\n0 0";
             // 
-            // label1
+            // btnCalc
             // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(271, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(259, 196);
-            this.label1.TabIndex = 1;
+            this.btnCalc.Location = new System.Drawing.Point(537, 13);
+            this.btnCalc.Name = "btnCalc";
+            this.btnCalc.Size = new System.Drawing.Size(75, 23);
+            this.btnCalc.TabIndex = 2;
+            this.btnCalc.Text = "Calculate";
+            this.btnCalc.UseVisualStyleBackColor = true;
+            this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
-            // button1
+            // btnExit
             // 
-            this.button1.Location = new System.Drawing.Point(537, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Calculate";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnExit.Location = new System.Drawing.Point(537, 186);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button2
+            // lblOut
             // 
-            this.button2.Location = new System.Drawing.Point(537, 186);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Exit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.lblOut.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblOut.Location = new System.Drawing.Point(270, 12);
+            this.lblOut.Name = "lblOut";
+            this.lblOut.Size = new System.Drawing.Size(261, 196);
+            this.lblOut.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(621, 217);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lblOut);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnCalc);
+            this.Controls.Add(this.txtdata);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -89,10 +92,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox txtdata;
+        private System.Windows.Forms.Button btnCalc;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Label lblOut;
     }
 }
 
