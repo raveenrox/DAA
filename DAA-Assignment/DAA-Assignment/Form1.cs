@@ -24,7 +24,7 @@ namespace DAA_Assignment
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-
+            String outText = "";
             //Reading
             String Line = txtdata.Text;
 
@@ -65,7 +65,7 @@ namespace DAA_Assignment
                             tsto = new TimeSpaceTradeOff();
                             tsto.Space = Int32.Parse(timeSpaceTradeOffList[k + 1]);
                             tsto.Time = Int32.Parse(timeSpaceTradeOffList[k + 2]);
-                            Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
+                            //Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
                             program.timeSpaceTradeOffs.Add(tsto);
                             k++;
                         }
@@ -78,43 +78,50 @@ namespace DAA_Assignment
                     break;
                 }
             }
-            Console.WriteLine(testCases[0].Programs[0].timeSpaceTradeOffs[0].Space);
+            //Console.WriteLine(testCases[0].Programs[0].timeSpaceTradeOffs[0].Space);
 
             //Printing
-            lblOut.Text = "";
+            outText = "";
 
             int avg_turnAround=0;
 
             for (int i = 0; i < testCases.Count; i++)
             {
+                //Console.WriteLine("Case "+i);
                 List<TimeSpaceTradeOff> tmpTSTOList = new List<TimeSpaceTradeOff>();
                 List<Int32> memoryRegions = testCases[i].memoryRegions;
 
-                lblOut.Text += "Case "+(i+1)+"\n";
-
-                lblOut.Text += "Average turnaround time = "+"\n";
-
+                outText += "Case "+(i+1)+"\n";
+                      
                 for (int j = 0; j < testCases[i].Programs.Count; j++)
                 {
+                    List<TimeSpaceTradeOff> _tmpTSTOList = new List<TimeSpaceTradeOff>();
                     for (int k = 0; k < testCases[i].Programs[j].timeSpaceTradeOffs.Count; k++)
                     {
-                        TimeSpaceTradeOff tmpTSTO = new TimeSpaceTradeOff();
-                        tmpTSTO.Space = testCases[i].Programs[j].timeSpaceTradeOffs[k].Space;
-                        tmpTSTO.Time = testCases[i].Programs[j].timeSpaceTradeOffs[k].Time;
-                        tmpTSTOList.Add(tmpTSTO);
+                        TimeSpaceTradeOff _tmpTSTO = new TimeSpaceTradeOff();
+                        _tmpTSTO.Space = testCases[i].Programs[j].timeSpaceTradeOffs[k].Space;
+                        _tmpTSTO.Time = testCases[i].Programs[j].timeSpaceTradeOffs[k].Time;
+                        _tmpTSTOList.Add(_tmpTSTO);
                     }
+                    //Console.WriteLine("Program " + j + ", Size " + _tmpTSTOList.Count);
+                    List<TimeSpaceTradeOff> _tmpSortedTSTOList = _tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
+                    TimeSpaceTradeOff _tmpMinTSTO = _tmpSortedTSTOList[0];
+                    tmpTSTOList.Add(_tmpMinTSTO);
                 }
                 List<TimeSpaceTradeOff> sortedList = tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
 
-                sortedList.RemoveAt(0);
+                outText += "Average turnaround time = " + "\n";
+                //sortedList.RemoveAt(0);
                 for (int z=0; z< sortedList.Count; z++)
                 {
-                    Console.WriteLine(sortedList[z].Space);
+                    Console.WriteLine(sortedList[z].Time);
                    
                 }
                 //tmpTSTOList.Sort();
-                Console.WriteLine(tmpTSTOList.Count);
-                lblOut.Text += "\n";
+                //Console.WriteLine(tmpTSTOList.Count);
+                outText += "\n";
+
+                lblOut.Text = outText;
             }
         }
     }
