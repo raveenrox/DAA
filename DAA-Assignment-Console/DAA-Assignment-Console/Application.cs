@@ -11,23 +11,30 @@ namespace DAA_Assignment_Console
     {
         static void Main(string[] args)
         {
-            String Line = File.ReadAllText("text.txt");
-            /*
-            String Line = "2 4\n"
-                + "40 60\n"
-                + "1 35 4\n"
-                + "1 20 3\n"
-                + "1 40 10\n"
-                + "1 60 7\n"
-                + "3 5\n"
-                + "10 20 30\n"
-                + "2 10 50 12 30\n"
-                + "2 10 100 20 25\n"
-                + "1 25 19\n"
-                + "1 19 41\n"
-                + "2 10 18 30 42\n"
-                + "0 0";
-            */
+            String Line = "";
+
+            try
+            {
+                Line = File.ReadAllText("text.txt");
+            }
+            catch (IOException ex)
+            {
+                Line = "2 4\n"
+                    + "40 60\n"
+                    + "1 35 4\n"
+                    + "1 20 3\n"
+                    + "1 40 10\n"
+                    + "1 60 7\n"
+                    + "3 5\n"
+                    + "10 20 30\n"
+                    + "2 10 50 12 30\n"
+                    + "2 10 100 20 25\n"
+                    + "1 25 19\n"
+                    + "1 19 41\n"
+                    + "2 10 18 30 42\n"
+                    + "0 0";
+            }
+
             String[] LineList = Line.Split('\n');
 
             List<TestCase> testCases;
