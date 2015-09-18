@@ -88,7 +88,8 @@ namespace DAA_Assignment
             for (int i = 0; i < testCases.Count; i++)
             {
                 List<TimeSpaceTradeOff> tmpTSTOList = new List<TimeSpaceTradeOff>();
-                
+                List<Int32> memoryRegions = testCases[i].memoryRegions;
+
                 lblOut.Text += "Case "+(i+1)+"\n";
 
                 lblOut.Text += "Average turnaround time = "+"\n";
@@ -104,6 +105,7 @@ namespace DAA_Assignment
                     }
                 }
                 List<TimeSpaceTradeOff> sortedList = tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
+
                 sortedList.RemoveAt(0);
                 for (int z=0; z< sortedList.Count; z++)
                 {
