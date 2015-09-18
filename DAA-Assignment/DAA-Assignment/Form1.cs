@@ -60,14 +60,15 @@ namespace DAA_Assignment
                         String[] timeSpaceTradeOffList = LineList[j].Split(' ');
                         program.timeSpaceTradeOffs = new List<TimeSpaceTradeOff>();
                         TimeSpaceTradeOff tsto;
-                        for (int k = 0; k <= Int32.Parse(timeSpaceTradeOffList[0]); k++)
+                        //Console.WriteLine(timeSpaceTradeOffList[0]);
+                        for (int k = 0; k < Int32.Parse(timeSpaceTradeOffList[0]); k++)
                         {
                             tsto = new TimeSpaceTradeOff();
-                            tsto.Space = Int32.Parse(timeSpaceTradeOffList[k + 1]);
-                            tsto.Time = Int32.Parse(timeSpaceTradeOffList[k + 2]);
-                            //Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
+                            tsto.Space = Int32.Parse(timeSpaceTradeOffList[(k*2) + 1]);
+                            tsto.Time = Int32.Parse(timeSpaceTradeOffList[(k*2) + 2]);
+                            Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
                             program.timeSpaceTradeOffs.Add(tsto);
-                            k++;
+                            
                         }
                         testCase.Programs.Add(program);
                     }
@@ -118,7 +119,7 @@ namespace DAA_Assignment
                    
                 }
                 //tmpTSTOList.Sort();
-                //Console.WriteLine(tmpTSTOList.Count);
+                //Console.WriteLine("Test Case " +i+", "+ tmpTSTOList.Count);
                 outText += "\n";
 
                 lblOut.Text = outText;
