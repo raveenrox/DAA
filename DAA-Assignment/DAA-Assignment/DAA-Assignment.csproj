@@ -55,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ProgramS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionOut.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TimeSpaceTradeOff.cs" />
     <EmbeddedResource Include="Form1.resx">

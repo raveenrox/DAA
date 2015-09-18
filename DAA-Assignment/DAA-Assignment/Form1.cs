@@ -25,10 +25,9 @@ namespace DAA_Assignment
         private void btnCalc_Click(object sender, EventArgs e)
         {
             String outText = "";
-            //Reading
+
             String Line = txtdata.Text;
 
-            //Storing
             String[] LineList = Line.Split('\n');
 
             List<TestCase> testCases;
@@ -52,7 +51,7 @@ namespace DAA_Assignment
                     {
                         testCase.memoryRegions.Add(Int32.Parse(memoryRegionList[j]));
                     }
-                    
+
                     for (int j = i + 2; j < i + 2 + testCase.noOfPrograms; j++)
                     {
                         ProgramS program = new ProgramS();
@@ -60,41 +59,39 @@ namespace DAA_Assignment
                         String[] timeSpaceTradeOffList = LineList[j].Split(' ');
                         program.timeSpaceTradeOffs = new List<TimeSpaceTradeOff>();
                         TimeSpaceTradeOff tsto;
-                        //Console.WriteLine(timeSpaceTradeOffList[0]);
                         for (int k = 0; k < Int32.Parse(timeSpaceTradeOffList[0]); k++)
                         {
                             tsto = new TimeSpaceTradeOff();
-                            tsto.Space = Int32.Parse(timeSpaceTradeOffList[(k*2) + 1]);
-                            tsto.Time = Int32.Parse(timeSpaceTradeOffList[(k*2) + 2]);
-                            //Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
+                            tsto.Space = Int32.Parse(timeSpaceTradeOffList[(k * 2) + 1]);
+                            tsto.Time = Int32.Parse(timeSpaceTradeOffList[(k * 2) + 2]);
                             program.timeSpaceTradeOffs.Add(tsto);
-                            
                         }
                         testCase.Programs.Add(program);
                     }
                     testCases.Add(testCase);
                     i = i + 1 + testCase.noOfPrograms;
-                } else
+                }
+                else
                 {
                     break;
                 }
             }
-            //Console.WriteLine(testCases[0].Programs[0].timeSpaceTradeOffs[0].Space);
 
-            //Printing
             outText = "";
 
-            int avg_turnAround=0;
-
-            for (int i = 0; i < testCases.Count; i++)
+            for(int i=0; i<testCases.Count; i++)
             {
-                //Console.WriteLine("Case "+i);
-                List<TimeSpaceTradeOff> tmpTSTOList = new List<TimeSpaceTradeOff>();
-                List<Int32> memoryRegions = testCases[i].memoryRegions;
+                double avg_turnAround = 0.0f;
 
-                outText += "Case "+(i+1)+"\n";
-                      
-                for (int j = 0; j < testCases[i].Programs.Count; j++)
+                List<TimeSpaceTradeOff> tmpTSTOList = new List<TimeSpaceTradeOff>();
+                List<Int32> memoryRegionTimeUsage = new List<Int32>();
+
+                for(int y=0; y<testCases[i].noOfMemoryRegions; y++)
+                {
+                    memoryRegionTimeUsage.Add(0);
+                }
+                
+                for (int j = 0; j < testCases[i].noOfPrograms; j++)
                 {
                     List<TimeSpaceTradeOff> _tmpTSTOList = new List<TimeSpaceTradeOff>();
                     for (int k = 0; k < testCases[i].Programs[j].timeSpaceTradeOffs.Count; k++)
@@ -102,62 +99,73 @@ namespace DAA_Assignment
                         TimeSpaceTradeOff _tmpTSTO = new TimeSpaceTradeOff();
                         _tmpTSTO.Space = testCases[i].Programs[j].timeSpaceTradeOffs[k].Space;
                         _tmpTSTO.Time = testCases[i].Programs[j].timeSpaceTradeOffs[k].Time;
+                        _tmpTSTO.Prog = j;
                         _tmpTSTOList.Add(_tmpTSTO);
                     }
-                    //Console.WriteLine("Program " + j + ", Size " + _tmpTSTOList.Count);
                     List<TimeSpaceTradeOff> _tmpSortedTSTOList = _tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
                     TimeSpaceTradeOff _tmpMinTSTO = _tmpSortedTSTOList[0];
                     tmpTSTOList.Add(_tmpMinTSTO);
                 }
-                List<TimeSpaceTradeOff> sortedList = tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
+                List<TimeSpaceTradeOff> tmpSortedTSTOList = tmpTSTOList.OrderBy(o => o.Time).ToList<TimeSpaceTradeOff>();
 
-                outText += "Average turnaround time = " + "\n";
-                //sortedList.RemoveAt(0);
-                List<Int32> memoryRegionUsage = new List<Int32>();
-                for (int z = 0; z < testCases[i].noOfMemoryRegions; z++)
+                SolutionOut solN = new SolutionOut();
+                solN.programList = new List<SolutionOut.Programs>();
+
+                int offSet = 0;
+                for (int z = 0; z < testCases[i].noOfPrograms; z++)
                 {
-                    memoryRegionUsage.Add(0);
-                }
-                
-                for (int z=0; z<testCases[i].noOfPrograms; z++)
-                {
-                    int tmpMinTime=0;
-                    for(int y=0; y<memoryRegionUsage.Count-1; y++)
+                    SolutionOut.Programs prog = new SolutionOut.Programs();
+
+                    int tmpMinTimeIndex = 0;
+
+                    if ((offSet == 1) && (memoryRegionTimeUsage.Count>2))
                     {
-                        if(memoryRegionUsage[y]<memoryRegionUsage[y+1])
-                        {
-                            tmpMinTime = y;
-                        } else
-                        {
-                            tmpMinTime = y + 1;
-                        }
-                        Console.WriteLine("Y : " + y);
+                        tmpMinTimeIndex = memoryRegionTimeUsage.IndexOf(memoryRegionTimeUsage.OrderBy(num=>num).ElementAt(1));
+                    } else
+                    {
+                        tmpMinTimeIndex = memoryRegionTimeUsage.IndexOf(memoryRegionTimeUsage.Min()) + offSet;
                     }
-                    Console.WriteLine("Min : " + tmpMinTime);
-                    memoryRegionUsage[tmpMinTime]+= sortedList[0].Time;
-                    
-                    sortedList.RemoveAt(0);
-                    Console.WriteLine("Z : "+z);
-                }
-                
-                //TODO remove
-                for(int z=0; z<memoryRegionUsage.Count; z++)
-                {
-                    Console.WriteLine("Cur Time "+z+" : "+memoryRegionUsage[z]);
-                }
-                //TODO remove ^^
-                /*
-                for (int z=0; z< sortedList.Count; z++)
-                {
-                    Console.WriteLine(sortedList[z].Time);
-                    
-                }*/
-                Console.WriteLine("Count : " + sortedList.Count);
-                //tmpTSTOList.Sort();
-                //Console.WriteLine("Test Case " +i+", "+ tmpTSTOList.Count);
-                outText += "\n";
 
-                lblOut.Text = outText;
+                    if(tmpMinTimeIndex>memoryRegionTimeUsage.Count-1)
+                    {
+                        tmpMinTimeIndex = memoryRegionTimeUsage.Count - 1;
+                    }
+
+                    if (tmpSortedTSTOList[0].Space>testCases[i].memoryRegions[tmpMinTimeIndex])
+                    {
+                        offSet++;
+                        z--;
+                        continue;
+                    }
+
+                    prog.progNo = tmpSortedTSTOList[0].Prog;
+                    prog.region = tmpMinTimeIndex;
+                    prog.startTime = memoryRegionTimeUsage[tmpMinTimeIndex];
+                    prog.endTime = memoryRegionTimeUsage[tmpMinTimeIndex] + tmpTSTOList[prog.progNo].Time;
+                    
+                    solN.programList.Add(prog);
+
+                    memoryRegionTimeUsage[tmpMinTimeIndex] += tmpTSTOList[tmpSortedTSTOList[0].Prog].Time;
+
+                    tmpSortedTSTOList.RemoveAt(0);
+
+                    offSet = 0;
+                }
+
+                Console.WriteLine("Case " + (i + 1));
+                String outProgramText = "";
+
+                List<SolutionOut.Programs> tmpSortedSolNProgs = solN.programList.OrderBy(o => o.progNo).ToList<SolutionOut.Programs>();
+                foreach(SolutionOut.Programs prog in tmpSortedSolNProgs)
+                {
+                    outProgramText += "Program " + (prog.progNo+1) + " runs in region " + (prog.region+1) + " from " +
+                        prog.startTime + " to " + prog.endTime + "\n";
+                    avg_turnAround += prog.endTime;
+                }
+
+                Console.WriteLine("Average turnaround time = " + (avg_turnAround / testCases[i].noOfPrograms));
+                Console.Write(outProgramText);
+                Console.WriteLine();
             }
         }
     }

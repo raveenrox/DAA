@@ -10,5 +10,6 @@ namespace DAA_Assignment
     {
         public int Space;
         public int Time;
+        public int Prog;
     }
 }
