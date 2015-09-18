@@ -66,7 +66,7 @@ namespace DAA_Assignment
                             tsto = new TimeSpaceTradeOff();
                             tsto.Space = Int32.Parse(timeSpaceTradeOffList[(k*2) + 1]);
                             tsto.Time = Int32.Parse(timeSpaceTradeOffList[(k*2) + 2]);
-                            Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
+                            //Console.WriteLine("Space="+tsto.Space + ", Time=" + tsto.Time);
                             program.timeSpaceTradeOffs.Add(tsto);
                             
                         }
@@ -113,11 +113,46 @@ namespace DAA_Assignment
 
                 outText += "Average turnaround time = " + "\n";
                 //sortedList.RemoveAt(0);
+                List<Int32> memoryRegionUsage = new List<Int32>();
+                for (int z = 0; z < testCases[i].noOfMemoryRegions; z++)
+                {
+                    memoryRegionUsage.Add(0);
+                }
+                
+                for (int z=0; z<testCases[i].noOfPrograms; z++)
+                {
+                    int tmpMinTime=0;
+                    for(int y=0; y<memoryRegionUsage.Count-1; y++)
+                    {
+                        if(memoryRegionUsage[y]<memoryRegionUsage[y+1])
+                        {
+                            tmpMinTime = y;
+                        } else
+                        {
+                            tmpMinTime = y + 1;
+                        }
+                        Console.WriteLine("Y : " + y);
+                    }
+                    Console.WriteLine("Min : " + tmpMinTime);
+                    memoryRegionUsage[tmpMinTime]+= sortedList[0].Time;
+                    
+                    sortedList.RemoveAt(0);
+                    Console.WriteLine("Z : "+z);
+                }
+                
+                //TODO remove
+                for(int z=0; z<memoryRegionUsage.Count; z++)
+                {
+                    Console.WriteLine("Cur Time "+z+" : "+memoryRegionUsage[z]);
+                }
+                //TODO remove ^^
+                /*
                 for (int z=0; z< sortedList.Count; z++)
                 {
                     Console.WriteLine(sortedList[z].Time);
-                   
-                }
+                    
+                }*/
+                Console.WriteLine("Count : " + sortedList.Count);
                 //tmpTSTOList.Sort();
                 //Console.WriteLine("Test Case " +i+", "+ tmpTSTOList.Count);
                 outText += "\n";
